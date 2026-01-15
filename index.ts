@@ -43,12 +43,18 @@ try {
     if (jobMessage) {
       // deal with some bugs around masking secrets, which can result in invalid JSON
       // e.g. `"AccessToken": ***`
-      jobMessage = jobMessage.replace(/: \*\*\*(,?$)/mg, ': "***"$1');
+      jobMessage = jobMessage.replace(/: \*\*\*(,?$)/gm, ': "***"$1');
       // secret masking can inadvertently change a subsequent `\"` to `"`
       jobMessage = jobMessage.replace(/\\"\*\*\*"([^,])/g, '\\"***\\"$1');
       const parsed = JSON.parse(jobMessage);
-      await fs.appendFile(process.env.GITHUB_OUTPUT!, `sha=${parsed?.variables?.["system.workflowFileSha"].value ?? ""}\n`);
-      await fs.appendFile(process.env.GITHUB_OUTPUT!, `ref=${parsed?.variables?.["system.workflowFileRef"].value ?? ""}\n`);
+      await fs.appendFile(
+        process.env.GITHUB_OUTPUT!,
+        `sha=${parsed?.variables?.["system.workflowFileSha"].value ?? ""}\n`
+      );
+      await fs.appendFile(
+        process.env.GITHUB_OUTPUT!,
+        `ref=${parsed?.variables?.["system.workflowFileRef"].value ?? ""}\n`
+      );
       const fullPath = parsed?.variables?.["system.workflowFileFullPath"].value ?? "";
       const pathParts = fullPath.split("/");
       let path: string;
