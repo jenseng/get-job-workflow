@@ -2,6 +2,7 @@ name: CICD
 on:
   pull_request: {}
   push:
+    branches: [ main ]
 concurrency:
   group: cicd
 jobs:
