@@ -25,7 +25,7 @@ jobs:
       - name: Assert repository
         env:
           expected_repository: ${{ inputs.expected-repository }}
-          actual_repository: ${{ steps.job-workflow.outputs.repository }}
+          actual_repository: ${{ fromJSON(steps.job-workflow.outputs.outputs).repository }}
         run: |
           if [[ "$expected_repository" != "$actual_repository" ]]; then
             echo "::error::Expected repository: $expected_repository"
@@ -35,7 +35,7 @@ jobs:
       - name: Assert path
         env:
           expected_path: ${{ inputs.expected-path }}
-          actual_path: ${{ steps.job-workflow.outputs.path }}
+          actual_path: ${{ fromJSON(steps.job-workflow.outputs.outputs).path }}
         run: |
           if [[ "$expected_path" != "$actual_path" ]]; then
             echo "::error::Expected path: $expected_path"
@@ -45,7 +45,7 @@ jobs:
       - name: Assert ref
         env:
           expected_ref: ${{ inputs.expected-ref }}
-          actual_ref: ${{ steps.job-workflow.outputs.ref }}
+          actual_ref: ${{ fromJSON(steps.job-workflow.outputs.outputs).ref }}
         run: |
           if [[ "$expected_ref" != "$actual_ref" ]]; then
             echo "::error::Expected ref: $expected_ref"
@@ -55,7 +55,7 @@ jobs:
       - name: Assert sha
         env:
           expected_sha: ${{ inputs.expected-sha }}
-          actual_sha: ${{ steps.job-workflow.outputs.sha }}
+          actual_sha: ${{ fromJSON(steps.job-workflow.outputs.outputs).sha }}
         run: |
           if [[ "$expected_sha" != "$actual_sha" ]]; then
             echo "::error::Expected sha: $expected_sha"
