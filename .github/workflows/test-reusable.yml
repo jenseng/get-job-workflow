@@ -15,7 +15,10 @@ on:
         type: string
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runs-on }}
+    strategy:
+      matrix:
+        runs-on: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - name: Get job workflow
         id: job-workflow
