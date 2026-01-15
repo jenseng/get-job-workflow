@@ -1,0 +1,14 @@
+name: Get Job Workflow
+description: Get information about the workflow that defines the current job
+runs:
+  using: node24
+  main: dist/index.js
+outputs:
+  sha:
+    description: The SHA of the workflow file
+  ref:
+    description: The ref of the workflow file
+  path:
+    description: The path to the workflow file
+  repository:
+    description: The repository that contains the workflow file
