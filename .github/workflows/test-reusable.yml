@@ -29,6 +29,7 @@ jobs:
         env:
           expected_repository: ${{ inputs.expected-repository }}
           actual_repository: ${{ fromJSON(steps.job-workflow.outputs.outputs).repository }}
+        shell: bash
         run: |
           if [[ "$expected_repository" != "$actual_repository" ]]; then
             echo "::error::Expected repository: $expected_repository"
@@ -39,6 +40,7 @@ jobs:
         env:
           expected_path: ${{ inputs.expected-path }}
           actual_path: ${{ fromJSON(steps.job-workflow.outputs.outputs).path }}
+        shell: bash
         run: |
           if [[ "$expected_path" != "$actual_path" ]]; then
             echo "::error::Expected path: $expected_path"
@@ -49,6 +51,7 @@ jobs:
         env:
           expected_ref: ${{ inputs.expected-ref }}
           actual_ref: ${{ fromJSON(steps.job-workflow.outputs.outputs).ref }}
+        shell: bash
         run: |
           if [[ "$expected_ref" != "$actual_ref" ]]; then
             echo "::error::Expected ref: $expected_ref"
@@ -59,6 +62,7 @@ jobs:
         env:
           expected_sha: ${{ inputs.expected-sha }}
           actual_sha: ${{ fromJSON(steps.job-workflow.outputs.outputs).sha }}
+        shell: bash
         run: |
           if [[ "$expected_sha" != "$actual_sha" ]]; then
             echo "::error::Expected sha: $expected_sha"
