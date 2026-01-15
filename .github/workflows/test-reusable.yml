@@ -24,41 +24,41 @@ jobs:
           uses: jenseng/get-job-workflow@${{ github.sha }}
       - name: Assert repository
         env:
-          expected-repository: ${{ inputs.expected-repository }}
-          actual-repository: ${{ steps.job-workflow.outputs.repository }}
+          expected_repository: ${{ inputs.expected-repository }}
+          actual_repository: ${{ steps.job-workflow.outputs.repository }}
         run: |
-          if [[ "$expected-repository" != "$actual-repository" ]]; then
-            echo "::error::Expected repository: $expected-repository"
-            echo "::error::Actual repository: $actual-repository"
+          if [[ "$expected_repository" != "$actual_repository" ]]; then
+            echo "::error::Expected repository: $expected_repository"
+            echo "::error::Actual repository: $actual_repository"
             exit 1
           fi
       - name: Assert path
         env:
-          expected-path: ${{ inputs.expected-path }}
-          actual-path: ${{ steps.job-workflow.outputs.path }}
+          expected_path: ${{ inputs.expected-path }}
+          actual_path: ${{ steps.job-workflow.outputs.path }}
         run: |
-          if [[ "$expected-path" != "$actual-path" ]]; then
-            echo "::error::Expected path: $expected-path"
-            echo "::error::Actual path: $actual-path"
+          if [[ "$expected_path" != "$actual_path" ]]; then
+            echo "::error::Expected path: $expected_path"
+            echo "::error::Actual path: $actual_path"
             exit 1
           fi
       - name: Assert ref
         env:
-          expected-ref: ${{ inputs.expected-ref }}
-          actual-ref: ${{ steps.job-workflow.outputs.ref }}
+          expected_ref: ${{ inputs.expected-ref }}
+          actual_ref: ${{ steps.job-workflow.outputs.ref }}
         run: |
-          if [[ "$expected-ref" != "$actual-ref" ]]; then
-            echo "::error::Expected ref: $expected-ref"
-            echo "::error::Actual ref: $actual-ref"
+          if [[ "$expected_ref" != "$actual_ref" ]]; then
+            echo "::error::Expected ref: $expected_ref"
+            echo "::error::Actual ref: $actual_ref"
             exit 1
           fi
       - name: Assert sha
         env:
-          expected-sha: ${{ inputs.expected-sha }}
-          actual-sha: ${{ steps.job-workflow.outputs.sha }}
+          expected_sha: ${{ inputs.expected-sha }}
+          actual_sha: ${{ steps.job-workflow.outputs.sha }}
         run: |
-          if [[ "$expected-sha" != "$actual-sha" ]]; then
-            echo "::error::Expected sha: $expected-sha"
-            echo "::error::Actual sha: $actual-sha"
+          if [[ "$expected_sha" != "$actual_sha" ]]; then
+            echo "::error::Expected sha: $expected_sha"
+            echo "::error::Actual sha: $actual_sha"
             exit 1
           fi
