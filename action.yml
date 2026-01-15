@@ -3,6 +3,11 @@ description: Get information about the workflow that defines the currently runni
 runs:
   using: node24
   main: dist/index.js
+inputs:
+  output-worker-log:
+    description: Whether to output the worker log. Useful for debugging.
+    required: false
+    default: "false"
 outputs:
   sha:
     description: The SHA of the workflow file

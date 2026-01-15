@@ -35,6 +35,10 @@ try {
 
   for (const file of workerLogFiles) {
     const content = await fs.readFile(file, "utf8");
+    if (process.env["INPUT_OUTPUT-WORKER-LOG"] === "true") {
+      process.stdout.write("Worker log file: " + file + "\n");
+      process.stdout.write(content + "\n");
+    }
     let jobMessage = content.match(/INFO Worker] Job message:\s+(.*?\r?\n\}\r?\n)/s)?.[1];
     if (jobMessage) {
       // deal with some bugs around masking secrets, which can result in invalid JSON
