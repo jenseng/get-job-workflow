@@ -42,7 +42,9 @@ try {
     let jobMessage = content.match(/INFO Worker] Job message:\s+(.*?\r?\n\}\r?\n)/s)?.[1];
     if (jobMessage) {
       // deal with some bugs around masking secrets, which can result in invalid JSON
-      jobMessage = jobMessage.replace(/: \*\*\*(,?$)/g, ': "***"$1');
+      // e.g. `"AccessToken": ***`
+      jobMessage = jobMessage.replace(/: \*\*\*(,?$)/mg, ': "***"$1');
+      // secret masking can inadvertently a subesequent `\"` to `"`
       jobMessage = jobMessage.replace(/\\"\*\*\*"([^,])/g, '\\"***\\"$1');
       const parsed = JSON.parse(jobMessage);
       await fs.appendFile(process.env.GITHUB_OUTPUT!, `sha=${parsed?.variables?.["system.workflowFileSha"].value ?? ""}\n`);
