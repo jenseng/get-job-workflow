@@ -33,14 +33,17 @@ jobs:
         shell: bash
         run: |
           last_version="$(git tag --merged HEAD | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort --version-sort | tail -n 1 | sed 's~v~~')"
-          if [[ $version == patch ]]; then
+          if [[ $version =~ ^\d+\.\d+\.\d+$ ]]; then
+            full_version="$version"
+          elsif [[ -z "$last_version" ]]; then
+            echo "::error::No release tags found. If this is the initial release, you should set an explicit version."
+            exit 1
+          elif [[ $version == patch ]]; then
             full_version="$(echo $last_version | awk -F. -v OFS=. '{$3=$3+1;print}')"
           elif [[ $version == minor ]]; then
             full_version="$(echo $last_version | awk -F. -v OFS=. '{$2=$2+1;$3=0;print}')"
           elif [[ $version == major ]]; then
             full_version="$(echo $last_version | awk -F. -v OFS=. '{$1=$1+1;$2=0;$3=0;print}')"
-          elif [[ $version =~ ^\d+\.\d+\.\d+$ ]]; then
-            full_version="$version"
           else
             echo "::error::Invalid version: expected patch|minor|major or X.Y.Z"
             exit 1
