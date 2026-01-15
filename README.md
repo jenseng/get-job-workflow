@@ -33,7 +33,7 @@ If you only need to run actions from the same ref, you can use [dynamic-uses](ht
   id: job-workflow
 - uses: jenseng/dynamic-uses@v1 # work around https://github.com/actions/runner/issues/895
   with: |
-    uses: ${{ steps.job-workflow.outputs.sha.repository }}/actions/some-action@${{ steps.job-workflow.outputs.sha }}
+    uses: ${{ steps.job-workflow.outputs.repository }}/actions/some-action@${{ steps.job-workflow.outputs.sha }}
 ```
 
 ### Access other files defined at the same ref
@@ -46,7 +46,7 @@ If you need other files defined at the same ref (e.g. scripts, configuration, et
 - uses: actions/checkout@v6
   with:
     ref: ${{ steps.job-workflow.outputs.sha }}
-    repository: ${{ steps.job-workflow.outputs.sha.repository }}
+    repository: ${{ steps.job-workflow.outputs.repository }}
     token: ${{ inputs.some_token }}
     path: workflow-ref-checkout
 - run: ./workflow-ref-checkout/some-script.sh
