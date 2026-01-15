@@ -1,0 +1,64 @@
+on:
+  workflow_call:
+    inputs:
+      expected-repository:
+        description: The repository that contains the workflow file
+        type: string
+      expected-path:
+        description: The path to the workflow file
+        type: string
+      expected-ref:
+        description: The ref of the workflow file
+        type: string
+      expected-sha:
+        description: The SHA of the workflow file
+        type: string
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get job workflow
+        id: job-workflow
+        uses: jenseng/dynamic-uses@v1
+        with:
+          uses: jenseng/get-job-workflow@${{ github.sha }}
+      - name: Assert repository
+        env:
+          expected-repository: ${{ inputs.expected-repository }}
+          actual-repository: ${{ steps.job-workflow.outputs.repository }}
+        run: |
+          if [[ "$expected-repository" != "$actual-repository" ]]; then
+            echo "::error::Expected repository: $expected-repository"
+            echo "::error::Actual repository: $actual-repository"
+            exit 1
+          fi
+      - name: Assert path
+        env:
+          expected-path: ${{ inputs.expected-path }}
+          actual-path: ${{ steps.job-workflow.outputs.path }}
+        run: |
+          if [[ "$expected-path" != "$actual-path" ]]; then
+            echo "::error::Expected path: $expected-path"
+            echo "::error::Actual path: $actual-path"
+            exit 1
+          fi
+      - name: Assert ref
+        env:
+          expected-ref: ${{ inputs.expected-ref }}
+          actual-ref: ${{ steps.job-workflow.outputs.ref }}
+        run: |
+          if [[ "$expected-ref" != "$actual-ref" ]]; then
+            echo "::error::Expected ref: $expected-ref"
+            echo "::error::Actual ref: $actual-ref"
+            exit 1
+          fi
+      - name: Assert sha
+        env:
+          expected-sha: ${{ inputs.expected-sha }}
+          actual-sha: ${{ steps.job-workflow.outputs.sha }}
+        run: |
+          if [[ "$expected-sha" != "$actual-sha" ]]; then
+            echo "::error::Expected sha: $expected-sha"
+            echo "::error::Actual sha: $actual-sha"
+            exit 1
+          fi
