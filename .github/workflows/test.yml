@@ -9,16 +9,16 @@ jobs:
       expected-ref: ${{ github.ref }}
       expected-sha: ${{ github.workflow_sha }}
   test-remote-via-sha:
-    uses: jenseng/get-job-workflow/.github/workflows/test-reusable.yml@2555c8573cd5fcc1e266fa48bffe93ae28dce171
+    uses: jenseng/get-job-workflow/.github/workflows/test-reusable.yml@ebfa6c2239eaa270ef8f310cb55196498d7d60e1
     with:
       expected-repository: jenseng/get-job-workflow
       expected-path: .github/workflows/test-reusable.yml
       expected-ref: ""
-      expected-sha: 2555c8573cd5fcc1e266fa48bffe93ae28dce171
+      expected-sha: ebfa6c2239eaa270ef8f310cb55196498d7d60e1
   test-remote-via-ref:
     uses: jenseng/get-job-workflow/.github/workflows/test-reusable.yml@test-workflow
     with:
       expected-repository: jenseng/get-job-workflow
       expected-path: .github/workflows/test-reusable.yml
       expected-ref: refs/tags/test-workflow
-      expected-sha: 2555c8573cd5fcc1e266fa48bffe93ae28dce171
+      expected-sha: ebfa6c2239eaa270ef8f310cb55196498d7d60e1
