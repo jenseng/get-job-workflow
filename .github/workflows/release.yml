@@ -33,7 +33,7 @@ jobs:
         shell: bash
         run: |
           last_version="$(git tag --merged HEAD | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort --version-sort | tail -n 1 | sed 's~v~~' || :)"
-          if [[ $version =~ ^\d+\.\d+\.\d+$ ]]; then
+          if [[ $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             full_version="$version"
           elif [[ -z "$last_version" ]]; then
             echo "::error::No release tags found. If this is the initial release, you should set an explicit version."
