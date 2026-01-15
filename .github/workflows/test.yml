@@ -13,12 +13,12 @@ jobs:
     with:
       expected-repository: jenseng/get-job-workflow
       expected-path: .github/workflows/test.yml
-      expected-ref: test-reusable
+      expected-ref: test-workflow
       expected-sha: 2c8b7aa6d5a123bab1609da505b847823ad8490b
   test-remote-via-ref:
-    uses: jenseng/get-job-workflow/.github/workflows/test-reusable.yml@test-reusable
+    uses: jenseng/get-job-workflow/.github/workflows/test-reusable.yml@test-workflow
     with:
       expected-repository: jenseng/get-job-workflow
       expected-path: .github/workflows/test.yml
-      expected-ref: test-reusable
+      expected-ref: test-workflow
       expected-sha: 2c8b7aa6d5a123bab1609da505b847823ad8490b
