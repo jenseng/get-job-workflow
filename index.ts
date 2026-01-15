@@ -35,7 +35,7 @@ try {
 
   for (const file of workerLogFiles) {
     const content = await fs.readFile(file, "utf8");
-    let jobMessage = content.match(/INFO Worker] Job message:\s+(.*?\n\}\n)/s)?.[1];
+    let jobMessage = content.match(/INFO Worker] Job message:\s+(.*?\r?\n\}\r?\n)/s)?.[1];
     if (jobMessage) {
       // deal with some bugs around masking secrets, which can result in invalid JSON
       jobMessage = jobMessage.replace(/: \*\*\*(,?$)/g, ': "***"$1');
