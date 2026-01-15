@@ -18,7 +18,7 @@ This can be useful for reusable workflows that need to know how they were called
 
 This will output something like:
 ```
-this reusable workflow was called via v1 (deadbeefdeadbeefdeadbeefdeadbeef)
+this reusable workflow was called via v1 (deadbeefdeadbeefdeadbeefdeadbeefdeadbeef)
 ```
 
 ## Examples
@@ -55,7 +55,7 @@ If you need other files defined at the same ref (e.g. scripts, configuration, et
 
 ### sha
 
-The SHA of the workflow file that defines the currently running job, e.g. `deadbeefdeadbeefdeadbeefdeadbeef`.
+The SHA of the workflow file that defines the currently running job, e.g. `deadbeefdeadbeefdeadbeefdeadbeefdeadbeef`.
 
 ### ref
 

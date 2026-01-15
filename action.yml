@@ -1,5 +1,5 @@
 name: Get Job Workflow
-description: Get information about the workflow that defines the current job
+description: Get information about the workflow that defines the currently running job
 runs:
   using: node24
   main: dist/index.js

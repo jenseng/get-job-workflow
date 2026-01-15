@@ -1,0 +1,24 @@
+name: Test
+on: workflow_call
+jobs:
+  test-local:
+    uses: ./.github/workflows/test-reusable.yml
+    with:
+      expected-repository: jenseng/get-job-workflow
+      expected-path: .github/workflows/test.yml
+      expected-ref: ""
+      expected-sha: ${{ github.workflow_sha }}
+  test-remote-via-sha:
+    uses: jenseng/get-job-workflow/.github/workflows/test-reusable.yml@2c8b7aa6d5a123bab1609da505b847823ad8490b
+    with:
+      expected-repository: jenseng/get-job-workflow
+      expected-path: .github/workflows/test.yml
+      expected-ref: test-reusable
+      expected-sha: 2c8b7aa6d5a123bab1609da505b847823ad8490b
+  test-remote-via-ref:
+    uses: jenseng/get-job-workflow/.github/workflows/test-reusable.yml@test-reusable
+    with:
+      expected-repository: jenseng/get-job-workflow
+      expected-path: .github/workflows/test.yml
+      expected-ref: test-reusable
+      expected-sha: 2c8b7aa6d5a123bab1609da505b847823ad8490b

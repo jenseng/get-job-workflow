@@ -1,0 +1,9 @@
+name: CICD
+on:
+  pull_request: {}
+  push:
+concurrency:
+  group: cicd
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml
