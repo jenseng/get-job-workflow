@@ -47,27 +47,46 @@ try {
       // secret masking can inadvertently change a subsequent `\"` to `"`
       jobMessage = jobMessage.replace(/\\"\*\*\*"([^,])/g, '\\"***\\"$1');
       const parsed = JSON.parse(jobMessage);
-      await fs.appendFile(
-        process.env.GITHUB_OUTPUT!,
-        `sha=${parsed?.variables?.["system.workflowFileSha"].value ?? ""}\n`
-      );
-      await fs.appendFile(
-        process.env.GITHUB_OUTPUT!,
-        `ref=${parsed?.variables?.["system.workflowFileRef"].value ?? ""}\n`
-      );
-      const fullPath = parsed?.variables?.["system.workflowFileFullPath"].value ?? "";
-      const pathParts = fullPath.split("/");
-      let path: string;
-      let repository: string;
-      if (pathParts[0] === ".github") {
-        path = fullPath;
-        repository = process.env.GITHUB_REPOSITORY!;
-      } else {
-        path = pathParts.slice(2).join("/");
-        repository = pathParts.slice(0, 2).join("/");
+
+      const githubContext = parsed?.contextData?.["github"]?.d ?? [];
+      const topLevelWorkflowSha = githubContext.find(({ k }: any) => k === "workflow_sha")?.v ?? "";
+      const topLevelWorkflowFullRef =
+        githubContext.find(({ k }: any) => k === "workflow_ref")?.v ?? "";
+      if (!topLevelWorkflowSha || !topLevelWorkflowFullRef) {
+        throw new Error(
+          `Unable to detect github.workflow_sha or github.workflow_ref, this might be a bug`
+        );
       }
-      await fs.appendFile(process.env.GITHUB_OUTPUT!, `path=${path}\n`);
-      await fs.appendFile(process.env.GITHUB_OUTPUT!, `repository=${repository}\n`);
+      const [topLevelWorkflowRepoAndPath, topLevelWorkflowRef] = topLevelWorkflowFullRef.split("@");
+
+      // system.workflow... variables are only set if this is a nested workflow
+      const workflowSha =
+        parsed?.variables?.["system.workflowFileSha"]?.value ?? topLevelWorkflowSha;
+      const workflowRef =
+        parsed?.variables?.["system.workflowFileRef"]?.value ?? topLevelWorkflowRef;
+      let workflowPath: string;
+      let workflowRepository: string;
+
+      const fullPath =
+        parsed?.variables?.["system.workflowFileFullPath"]?.value ?? topLevelWorkflowRepoAndPath;
+      const pathParts = fullPath.split("/");
+      if (pathParts[0] === ".github") {
+        workflowPath = fullPath;
+        workflowRepository = process.env.GITHUB_REPOSITORY!;
+      } else {
+        workflowPath = pathParts.slice(2).join("/");
+        workflowRepository = pathParts.slice(0, 2).join("/");
+      }
+
+      await fs.appendFile(
+        process.env.GITHUB_OUTPUT!,
+        [
+          `sha=${workflowSha}`,
+          `ref=${workflowRef}`,
+          `path=${workflowPath}`,
+          `repository=${workflowRepository}`,
+        ].join("\n")
+      );
       process.exit(0);
     }
   }

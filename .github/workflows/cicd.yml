@@ -25,6 +25,47 @@ jobs:
             echo "Build output has changed. Please run 'npm run build' and commit the changes."
             exit 1
           }
-  test:
-    uses: ./.github/workflows/test.yml
+
+  test-top-level:
     needs: validate-dist
+    runs-on: ${{ matrix.runs-on }}
+    strategy:
+      matrix:
+        runs-on: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - name: Test get job workflow
+        uses: jenseng/dynamic-uses@v1
+        with:
+          uses: jenseng/get-job-workflow/.github/actions/test@${{ github.sha }}
+          with: |
+            expected-repository: jenseng/get-job-workflow
+            expected-path: .github/workflows/cicd.yml
+            expected-ref: ${{ toJSON(github.ref) }}
+            expected-sha: ${{ toJSON(github.workflow_sha) }}
+
+  test-nested-local:
+    needs: validate-dist
+    uses: ./.github/workflows/test-nested.yml
+    with:
+      expected-repository: jenseng/get-job-workflow
+      expected-path: .github/workflows/test-nested.yml
+      expected-ref: ${{ github.ref }}
+      expected-sha: ${{ github.workflow_sha }}
+
+  test-nested-remote-via-sha:
+    needs: validate-dist
+    uses: jenseng/get-job-workflow/.github/workflows/test-reusable.yml@ebfa6c2239eaa270ef8f310cb55196498d7d60e1
+    with:
+      expected-repository: jenseng/get-job-workflow
+      expected-path: .github/workflows/test-reusable.yml
+      expected-ref: ""
+      expected-sha: ebfa6c2239eaa270ef8f310cb55196498d7d60e1
+
+  test-nested-remote-via-ref:
+    needs: validate-dist
+    uses: jenseng/get-job-workflow/.github/workflows/test-reusable.yml@test-workflow
+    with:
+      expected-repository: jenseng/get-job-workflow
+      expected-path: .github/workflows/test-reusable.yml
+      expected-ref: refs/tags/test-workflow
+      expected-sha: ebfa6c2239eaa270ef8f310cb55196498d7d60e1
