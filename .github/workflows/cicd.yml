@@ -54,18 +54,18 @@ jobs:
 
   test-nested-remote-via-sha:
     needs: validate-dist
-    uses: jenseng/get-job-workflow/.github/workflows/test-reusable.yml@ebfa6c2239eaa270ef8f310cb55196498d7d60e1
+    uses: jenseng/get-job-workflow/.github/workflows/test-nested.yml@8fe6cf3c7c02d021a440bd78c2de105ea78df6dc
     with:
       expected-repository: jenseng/get-job-workflow
-      expected-path: .github/workflows/test-reusable.yml
+      expected-path: .github/workflows/test-nested.yml
       expected-ref: ""
-      expected-sha: ebfa6c2239eaa270ef8f310cb55196498d7d60e1
+      expected-sha: 8fe6cf3c7c02d021a440bd78c2de105ea78df6dc
 
   test-nested-remote-via-ref:
     needs: validate-dist
-    uses: jenseng/get-job-workflow/.github/workflows/test-reusable.yml@test-workflow
+    uses: jenseng/get-job-workflow/.github/workflows/test-nested.yml@nested-workflow-test-ref
     with:
       expected-repository: jenseng/get-job-workflow
-      expected-path: .github/workflows/test-reusable.yml
-      expected-ref: refs/tags/test-workflow
-      expected-sha: ebfa6c2239eaa270ef8f310cb55196498d7d60e1
+      expected-path: .github/workflows/test-nested.yml
+      expected-ref: refs/tags/nested-workflow-test-ref
+      expected-sha: 8fe6cf3c7c02d021a440bd78c2de105ea78df6dc
