@@ -26,7 +26,7 @@ this reusable workflow was called via v1 (deadbeefdeadbeefdeadbeefdeadbeefdeadbe
 
 ### Run an action defined at the same ref
 
-If you only need to run actions from the same ref, you can use [dynamic-uses](https://github.com/marketplace/actions/dynamic-uses). This allows you to avoid having to use [actions/checkout](https://github.com/marketplace/actions/checkout) or deal with tokens or deploy keys.
+If you only need to run actions from the same ref, you can use [jenseng/dynamic-uses](https://github.com/marketplace/actions/dynamic-uses). This allows you to avoid having to use [actions/checkout](https://github.com/marketplace/actions/checkout) or deal with tokens or deploy keys.
 
 ```yaml
 - uses: jenseng/get-job-workflow@v1
@@ -38,7 +38,7 @@ If you only need to run actions from the same ref, you can use [dynamic-uses](ht
 
 ### Access other files defined at the same ref
 
-If you need other files defined at the same ref (e.g. scripts, configuration, etc), you can use [actions/checkout](https://github.com/marketplace/actions/checkout). Note that if the ref is from private repo that is different repo than `github.repo` (i.e. you're calling reusable workflows across repositories), then you will need to set up and use a token or deploy key that grants access to the repo.
+If you need other files defined at the same ref (e.g. scripts, configuration, etc), you can use [actions/checkout](https://github.com/marketplace/actions/checkout). Note that if the ref is from private repository that is different repository than `github.repository` (i.e. you're calling reusable workflows across repositories), then you will need to set up and use a token or deploy key that grants access to the repository.
 
 ```yaml
 - uses: jenseng/get-job-workflow@v1
@@ -51,6 +51,12 @@ If you need other files defined at the same ref (e.g. scripts, configuration, et
     path: workflow-ref-checkout
 - run: ./workflow-ref-checkout/some-script.sh
 ```
+
+## Inputs
+
+### output-worker-log
+
+Whether to output the worker log. Useful for debugging. Defaults to `false`.
 
 ## Outputs
 
