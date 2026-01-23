@@ -28,7 +28,10 @@ jobs:
 
   test-top-level:
     needs: validate-dist
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runs-on }}
+    strategy:
+      matrix:
+        runs-on: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - name: Test get job workflow
         uses: jenseng/dynamic-uses@v1
