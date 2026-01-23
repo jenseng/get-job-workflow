@@ -1,24 +1,32 @@
-name: Test
-on: workflow_call
+on:
+  workflow_call:
+    inputs:
+      expected-repository:
+        description: The repository that contains the workflow file
+        type: string
+      expected-path:
+        description: The path to the workflow file
+        type: string
+      expected-ref:
+        description: The ref of the workflow file
+        type: string
+      expected-sha:
+        description: The SHA of the workflow file
+        type: string
 jobs:
-  test-local:
-    uses: ./.github/workflows/test-reusable.yml
-    with:
-      expected-repository: jenseng/get-job-workflow
-      expected-path: .github/workflows/test-reusable.yml
-      expected-ref: ${{ github.ref }}
-      expected-sha: ${{ github.workflow_sha }}
-  test-remote-via-sha:
-    uses: jenseng/get-job-workflow/.github/workflows/test-reusable.yml@ebfa6c2239eaa270ef8f310cb55196498d7d60e1
-    with:
-      expected-repository: jenseng/get-job-workflow
-      expected-path: .github/workflows/test-reusable.yml
-      expected-ref: ""
-      expected-sha: ebfa6c2239eaa270ef8f310cb55196498d7d60e1
-  test-remote-via-ref:
-    uses: jenseng/get-job-workflow/.github/workflows/test-reusable.yml@test-workflow
-    with:
-      expected-repository: jenseng/get-job-workflow
-      expected-path: .github/workflows/test-reusable.yml
-      expected-ref: refs/tags/test-workflow
-      expected-sha: ebfa6c2239eaa270ef8f310cb55196498d7d60e1
+  test:
+    runs-on: ${{ matrix.runs-on }}
+    strategy:
+      matrix:
+        runs-on: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - name: Get job workflow
+        id: job-workflow
+        uses: jenseng/dynamic-uses@v1
+        with:
+          uses: jenseng/get-job-workflow/.github/actions/test@${{ github.sha }}
+          with: |
+            expected-repository: ${{ toJSON(inputs.expected-repository) }}
+            expected-path: ${{ toJSON(inputs.expected-path) }}
+            expected-ref: ${{ toJSON(inputs.expected-ref) }}
+            expected-sha: ${{ toJSON(inputs.expected-sha) }}
