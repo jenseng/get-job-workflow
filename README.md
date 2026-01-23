@@ -38,7 +38,7 @@ If you only need to run actions from the same ref, you can use [jenseng/dynamic-
 
 ### Access other files defined at the same ref
 
-If you need other files defined at the same ref (e.g. scripts, configuration, etc), you can use [actions/checkout](https://github.com/marketplace/actions/checkout). Note that if the ref is from private repository that is different repository than `github.repository` (i.e. you're calling reusable workflows across repositories), then you will need to set up and use a token or deploy key that grants access to the repository.
+If you need other files defined at the same ref (e.g. scripts, configuration, etc), you can use [actions/checkout](https://github.com/marketplace/actions/checkout). Note that if the ref is from a private repository other than than `github.repository` (i.e. you're calling reusable workflows across repositories), then you will need to set up and use a token or deploy key that grants access to the repository.
 
 ```yaml
 - uses: jenseng/get-job-workflow@v1
