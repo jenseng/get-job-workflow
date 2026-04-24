@@ -1,7 +1,7 @@
 > [!IMPORTANT]
 > **This action is deprecated**
 >
-> As of [2026-04-03](https://github.com/orgs/community/discussions/38659#discussioncomment-16690119), GitHub now natively supports this via the job context (e.g. `job.workflow_ref`), making this action redudnant. [Learn more](https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#job-context).
+> As of [2026-04-03](https://github.com/orgs/community/discussions/38659#discussioncomment-16690119), GitHub now natively supports this via the job context (e.g. `job.workflow_ref`), making this action redundant. [Learn more](https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#job-context).
 >
 > That said, you may still find this action useful if you're using an older version of GitHub Enterprise Server.
 
